@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-python-mango = "*"
 pymango = "*"
 fastapi = "*"
 uvicorn = "*"
 python-multipart = "*"
+boto3 = "*"
 
 [dev-packages]
 

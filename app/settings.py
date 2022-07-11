@@ -22,3 +22,8 @@ url = 'mongodb://{user}:{pw}@{hosts}/?replicaSet={rs}&authSource={auth_src}'.for
     auth_src=os.environ['MONGODB_DATABASE'])
 
 db = MongoClient(url, tlsCAFile='./assets/CA.pem')['classify']
+
+YA_RELOAD_TIME = 60
+YA_SERVICE_ACC_ID = os.getenv("YA_SERVICE_ACC_ID")
+YA_SERVICE_KEY_ID = os.getenv("YA_SERVICE_KEY_ID")
+YA_SERVICE_PRIVATE_FILE = os.getenv("YA_SERVICE_PRIVATE_FILE")

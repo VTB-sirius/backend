@@ -2,6 +2,8 @@ import os
 
 import uvicorn
 
+import app.adapters.ya
+
 uvicorn.run(
     "app.__init__:app",
     host=os.getenv("HOST") or "0.0.0.0",

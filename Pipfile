@@ -9,7 +9,8 @@ fastapi = "*"
 uvicorn = "*"
 python-multipart = "*"
 boto3 = "*"
-pyjwt = "*"
+pyjwt = {extras = ["crypto"], version = "*"}
+requests = "*"
 
 [dev-packages]
 

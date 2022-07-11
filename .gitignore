@@ -1,3 +1,4 @@
 .env
 .idea
 venv
+assets/YA_SERVICE_PRIVATE_FILE.pem

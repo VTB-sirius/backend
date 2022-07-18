@@ -11,6 +11,7 @@ python-multipart = "*"
 boto3 = "*"
 pyjwt = {extras = ["crypto"], version = "*"}
 requests = "*"
+bson = "*"
 
 [dev-packages]
 

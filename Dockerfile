@@ -24,6 +24,7 @@ COPY --from=builder /app /app/
 RUN ls -al && pipenv install
 
 ADD app /app/app
+ADD assets /app/assets
 
 EXPOSE 8000
 CMD pipenv run python -m app

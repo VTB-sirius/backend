@@ -25,7 +25,7 @@ class YandexDataSphere:
             sleep(YA_RELOAD_TIME)
 
     def _gen_jwt_token(self):
-        with open("assets/YA_SERVICE_PRIVATE_FILE.pem", 'r') as private:
+        with open("/app/assets/YA_SERVICE_PRIVATE_FILE.pem", 'r') as private:
             private_key = private.read()
 
         payload = {

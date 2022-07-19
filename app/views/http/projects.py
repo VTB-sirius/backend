@@ -45,7 +45,7 @@ async def create_project(file: UploadFile):
 
 	commandToRun = "python3 /home/jupyter/model_dbs.py " + str(project_id) + " " +  fileKey
 
-	volumes = ['/home/simbauser/sirius/models/:/home/jupyter']
+	volumes = ['/app/models/:/home/jupyter']
 	
 	container = client.containers.run("dbs_model", commandToRun, environment=envis, volumes=volumes, remove=True)
 

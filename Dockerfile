@@ -25,6 +25,7 @@ RUN ls -al && pipenv install
 
 ADD app /app/app
 ADD assets /app/assets
+ADD models /app/models
 
 EXPOSE 8000
 CMD pipenv run python -m app

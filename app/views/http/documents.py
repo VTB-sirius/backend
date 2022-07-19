@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, UploadFile
 
 from app.adapters.ya import yc
 
-from settings import db
+from ...settings import db
 
 router = APIRouter(prefix="/documents")
 

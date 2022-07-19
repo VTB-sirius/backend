@@ -1,3 +1,5 @@
+from concurrent.futures import process
+from msilib.schema import Environment
 from random import randint
 from bson import ObjectId
 from fastapi import APIRouter, HTTPException, UploadFile
@@ -8,7 +10,7 @@ import docker
 from app.adapters.ya import yc
 
 from .documents import router as doc_router
-from ...settings import s3, db
+from ...settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, MONGODB_DATABASE, MONGODB_HOST, MONGODB_PASSWORD, MONGODB_USERNAME, YA_SERVICE_ACC_ID, YA_SERVICE_KEY_ID, s3, db
 
 
 router = APIRouter(prefix="/projects")
@@ -28,8 +30,25 @@ async def create_project(file: UploadFile):
 	project_id = db['projects'].insert_one({
 		'file_id': fileKey,
 	}).inserted_id
+
+	envis = {
+		'AWS_ACCESS_KEY_ID': AWS_ACCESS_KEY_ID,
+		'AWS_SECRET_ACCESS_KEY': AWS_SECRET_ACCESS_KEY,
+
+		'MONGODB_HOST': MONGODB_HOST,
+		'MONGODB_DATABASE': MONGODB_DATABASE,
+		'MONGODB_USERNAME': MONGODB_USERNAME,
+		'MONGODB_PASSWORD': MONGODB_PASSWORD,
+
+		'YA_SERVICE_ACC_ID': YA_SERVICE_ACC_ID,
+		'YA_SERVICE_KEY_ID': YA_SERVICE_KEY_ID,
+	}
+
+	commandToRun = "python3 /home/jupyter/model_dbs.py " + str(project_id) + " " +  fileKey
+
+	volumes = ['/home/simbauser/sirius/models/:/home/jupyter']
 	
-	client.containers.run("docker", "run", "-it --rm --name dbs_model", "--env-file /.env.docker", "-v /home/simbauser/sirius/models/:/home/jupyter", "deploymodel:latest", "python3", "/home/jupyter/model_dbs.py", str(project_id), fileKey, detach=True)
+	client.containers.run("dbs_model", commandToRun, detach=True, environment=envis, volumes=volumes, auto_remove=True)
 		
 	return {"status": "success", "payload": {"id": str(project_id)}}
 

@@ -25,6 +25,9 @@ db = MongoClient(url, tlsCAFile='./assets/CA.pem')['classify']
 
 S3_BUCKET = os.getenv("S3_BUCKET")
 SERVICE_NAME = os.getenv("SERVICE_NAME")
+KEY = os.getenv("KEY")
+SECRET = os.getenv("SECRET")
+ENDPOINT = os.getenv("ENDPOINT")
 
 YA_RELOAD_TIME = 60
 YA_SERVICE_ACC_ID = os.getenv("YA_SERVICE_ACC_ID")

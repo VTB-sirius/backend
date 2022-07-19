@@ -49,11 +49,13 @@ async def create_project(file: UploadFile):
 		'YA_SERVICE_KEY_ID': YA_SERVICE_KEY_ID,
 	}
 
-	commandToRun = "python3 /app/model_bert.py " + str(project_id) + " " +  fileKey
+	commandToRunBert = "python3 /app/model_bert.py " + str(project_id) + " " +  fileKey
+	commandToRunLda = "python3 /app/model_lda.py 15 " + str(project_id) + " " +  fileKey
+	commandToRunDbs = "python3 /app/model_dbs.py " + str(project_id) + " " +  fileKey
 	
-	container = client.containers.run("vtb_models", commandToRun, environment=envis, detach=True, remove=True)
-
-	print(container.logs())
+	client.containers.run("vtb_models", commandToRunBert, environment=envis, detach=True, remove=True) #bert
+	client.containers.run("vtb_models", commandToRunLda, environment=envis, detach=True, remove=True) #lda
+	client.containers.run("vtb_models", commandToRunDbs, environment=envis, detach=True, remove=True) #dbscan
 		
 	return {"status": "success", "payload": {"id": str(project_id)}}
 

@@ -51,7 +51,7 @@ async def create_project(file: UploadFile):
 
 	commandToRun = "python3 /app/model_bert.py " + str(project_id) + " " +  fileKey
 	
-	container = client.containers.run("vtb_models", commandToRun, environment=envis)
+	container = client.containers.run("vtb_models", commandToRun, environment=envis, detach=True, remove=True)
 
 	print(container.logs())
 		

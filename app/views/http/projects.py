@@ -3,6 +3,7 @@ from bson import ObjectId
 from fastapi import APIRouter, HTTPException, UploadFile
 
 import subprocess
+import docker
 
 from app.adapters.ya import yc
 
@@ -13,6 +14,7 @@ from ...settings import s3, db
 router = APIRouter(prefix="/projects")
 router.include_router(doc_router)
 
+client = docker.from_env()
 
 @router.post("/", status_code=201)
 async def create_project(file: UploadFile):
@@ -27,7 +29,7 @@ async def create_project(file: UploadFile):
 		'file_id': fileKey,
 	}).inserted_id
 	
-	subprocess.Popen(["docker", "run", "-it --rm --name dbs_model", "--env-file /.env.docker", "-v /home/simbauser/sirius/models/:/home/jupyter", "deploymodel:latest", "python3", "/home/jupyter/model_dbs.py", str(project_id), fileKey])
+	client.containers.run("docker", "run", "-it --rm --name dbs_model", "--env-file /.env.docker", "-v /home/simbauser/sirius/models/:/home/jupyter", "deploymodel:latest", "python3", "/home/jupyter/model_dbs.py", str(project_id), fileKey, detach=True)
 		
 	return {"status": "success", "payload": {"id": str(project_id)}}
 

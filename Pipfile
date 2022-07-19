@@ -12,6 +12,7 @@ boto3 = "*"
 pyjwt = {extras = ["crypto"], version = "*"}
 requests = "*"
 bson = "*"
+docker = "*"
 
 [dev-packages]
 

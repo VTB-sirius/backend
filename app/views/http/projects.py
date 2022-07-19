@@ -9,7 +9,7 @@ import docker
 from app.adapters.ya import yc
 
 from .documents import router as doc_router
-from ...settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, MONGODB_DATABASE, MONGODB_HOST, MONGODB_PASSWORD, MONGODB_USERNAME, YA_SERVICE_ACC_ID, YA_SERVICE_KEY_ID, s3, db
+from ...settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, MONGODB_DATABASE, MONGODB_HOST, MONGODB_PASSWORD, MONGODB_USERNAME, S3_BUCKET, SERVICE_NAME, YA_SERVICE_ACC_ID, YA_SERVICE_KEY_ID, s3, db
 
 
 router = APIRouter(prefix="/projects")
@@ -31,6 +31,9 @@ async def create_project(file: UploadFile):
 	}).inserted_id
 
 	envis = {
+		'S3_BUCKET': S3_BUCKET,
+		'SERVICE_NAME': SERVICE_NAME,
+
 		'AWS_ACCESS_KEY_ID': AWS_ACCESS_KEY_ID,
 		'AWS_SECRET_ACCESS_KEY': AWS_SECRET_ACCESS_KEY,
 

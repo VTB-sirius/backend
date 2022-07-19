@@ -23,6 +23,9 @@ url = 'mongodb://{user}:{pw}@{hosts}/?replicaSet={rs}&authSource={auth_src}'.for
 
 db = MongoClient(url, tlsCAFile='./assets/CA.pem')['classify']
 
+S3_BUCKET = os.getenv("S3_BUCKET")
+SERVICE_NAME = os.getenv("SERVICE_NAME")
+
 YA_RELOAD_TIME = 60
 YA_SERVICE_ACC_ID = os.getenv("YA_SERVICE_ACC_ID")
 YA_SERVICE_KEY_ID = os.getenv("YA_SERVICE_KEY_ID")

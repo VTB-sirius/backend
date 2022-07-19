@@ -43,7 +43,7 @@ async def create_project(file: UploadFile):
 		'YA_SERVICE_KEY_ID': YA_SERVICE_KEY_ID,
 	}
 
-	commandToRun = "python3 /home/jupyter/model_dbs.py " + str(project_id) + " " +  fileKey
+	commandToRun = "python3 /home/jupyter/dbs_model.py " + str(project_id) + " " +  fileKey
 
 	volumes = ['/app/models/:/home/jupyter']
 	

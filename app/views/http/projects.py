@@ -47,7 +47,9 @@ async def create_project(file: UploadFile):
 
 	volumes = ['/home/simbauser/sirius/models/:/home/jupyter']
 	
-	client.containers.run("dbs_model", commandToRun, detach=True, environment=envis, volumes=volumes, auto_remove=True)
+	container = client.containers.run("dbs_model", commandToRun, detach=True, environment=envis, volumes=volumes, auto_remove=True)
+
+	print(container.logs())
 		
 	return {"status": "success", "payload": {"id": str(project_id)}}
 

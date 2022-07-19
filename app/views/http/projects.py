@@ -8,12 +8,10 @@ import docker
 
 from app.adapters.ya import yc
 
-from .documents import router as doc_router
 from ...settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, ENDPOINT, KEY, MONGODB_DATABASE, MONGODB_HOST, MONGODB_PASSWORD, MONGODB_USERNAME, S3_BUCKET, SECRET, SERVICE_NAME, YA_SERVICE_ACC_ID, YA_SERVICE_KEY_ID, s3, db
 
 
 router = APIRouter(prefix="/projects")
-router.include_router(doc_router)
 
 client = docker.from_env()
 
@@ -71,6 +69,10 @@ async def get_project(_id: str, model: str):
 	elif model == 'dbscan' and ('dbs_payload' in project):
 		return { "status": "success", "payload": project['dbs_payload'] }
 	elif model == 'dbscan':
+		return { "status": "pending", "payload": {} }
+	elif model == 'bert' and ('bert_payload' in project):
+		return { "status": "pending", "payload": project['bert_payload'] }
+	elif model == 'bert':
 		return { "status": "pending", "payload": {} }
 	else:
 		raise HTTPException(status_code=404, detail="not found")

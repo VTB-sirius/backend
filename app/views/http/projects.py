@@ -43,11 +43,9 @@ async def create_project(file: UploadFile):
 		'YA_SERVICE_KEY_ID': YA_SERVICE_KEY_ID,
 	}
 
-	commandToRun = "python3 /home/jupyter/dbs_model.py " + str(project_id) + " " +  fileKey
-
-	volumes = ['/app/models/:/home/jupyter']
+	commandToRun = "python3 /app/model_bert.py " + str(project_id) + " " +  fileKey
 	
-	container = client.containers.run("dbs_model", commandToRun, environment=envis, volumes=volumes)
+	container = client.containers.run("vtb_models", commandToRun, environment=envis)
 
 	print(container.logs())
 		

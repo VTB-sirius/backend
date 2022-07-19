@@ -27,7 +27,7 @@ async def create_project(file: UploadFile):
 		'file_id': fileKey,
 	}).inserted_id
 	
-	subprocess.Popen(["docker", "run", "-it --rm --name dbs_model", "--env-file /.env.docker", "-v /home/simbauser/sirius/models/:/home/jupyter", "deploymodel:latest", "python3", "/home/jupyter/model_dbs.py", project_id, fileKey])
+	subprocess.Popen(["docker", "run", "-it --rm --name dbs_model", "--env-file /.env.docker", "-v /home/simbauser/sirius/models/:/home/jupyter", "deploymodel:latest", "python3", "/home/jupyter/model_dbs.py", str(project_id), fileKey])
 		
 	return {"status": "success", "payload": {"id": str(project_id)}}
 

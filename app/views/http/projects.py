@@ -48,12 +48,14 @@ async def create_project(file: UploadFile):
 	}
 
 	commandToRunBert = "python3 /app/model_bert.py " + str(project_id) + " " +  fileKey
-	commandToRunLda = "python3 /app/model_lda.py 15 " + str(project_id) + " " +  fileKey
+	commandToRunLda = "python3 /app/model_lda.py " + str(project_id) + " " +  fileKey + " 15"
 	commandToRunDbs = "python3 /app/model_dbs.py " + str(project_id) + " " +  fileKey
+	commandToRunDeep = "python3 /app/model_deep.py" + str(project_id) + " " +  fileKey + " 15"
 	
 	client.containers.run("vtb_models", commandToRunBert, environment=envis, detach=True, remove=True) #bert
 	client.containers.run("vtb_models", commandToRunLda, environment=envis, detach=True, remove=True) #lda
 	client.containers.run("vtb_models", commandToRunDbs, environment=envis, detach=True, remove=True) #dbscan
+	client.containers.run("vtb_models", commandToRunDeep, environment=envis, detach=True, remove=True) #deep k-means
 		
 	return {"status": "success", "payload": {"id": str(project_id)}}
 
@@ -73,6 +75,10 @@ async def get_project(_id: str, model: str):
 	elif model == 'bert' and ('bert_payload' in project):
 		return { "status": "pending", "payload": project['bert_payload'] }
 	elif model == 'bert':
+		return { "status": "pending", "payload": {} }
+	elif model == 'deep' and ('deep_payload' in project):
+		return { "status": "pending", "payload": project['deep_payload'] }
+	elif model == 'deep':
 		return { "status": "pending", "payload": {} }
 	else:
 		raise HTTPException(status_code=404, detail="not found")
